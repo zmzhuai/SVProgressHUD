@@ -688,10 +688,17 @@ CGFloat SVProgressHUDRingThickness = 6;
         
     UIWindow *keyboardWindow = nil;
     for (UIWindow *testWindow in [[UIApplication sharedApplication] windows]) {
+#if DEBUG // configure iConsole for DEBUG mode
+        if(![[testWindow class] isEqual:[iConsoleWindow class]]) {              // !!!: add by zhangmin
+            keyboardWindow = testWindow;
+            break;
+        }
+#else
         if(![[testWindow class] isEqual:[UIWindow class]]) {
             keyboardWindow = testWindow;
             break;
         }
+#endif
     }
     
     for (__strong UIView *possibleKeyboard in [keyboardWindow subviews]) {
